@@ -11,10 +11,10 @@ h1 {
 }
 
 .logo {
-    width: 70vw;
+    width: 300px;
 }
 
-.btn {
+.button {
     background-color: rgb(36, 128, 221);
     color: white;
     border-radius: 15px;
@@ -23,6 +23,12 @@ h1 {
     box-shadow: 2px 3px 5px lightgray;
 }
 
-.btn:hover {
+.button:hover {
     background-color: dodgerblue;
+    color: white;
+}
+
+.bi-film {
+    font-size: 30px;
+    margin-right: 10px;
 }
