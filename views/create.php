@@ -24,10 +24,10 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="../index.html">Accueil</a>
+                            <a class="nav-link" href="../index.php">Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Publier un film</a>
+                            <a class="nav-link active" aria-current="page" href="#">Publier un film</a>
                         </li>
                     </ul>
                 </div>
@@ -41,7 +41,8 @@
             <label for="title">Titre</label>
             <input type="text" name="title" id="title" placeholder="Le titre du film" class="form-control">
             <label for="synopsis">Synopsis</label>
-            <textarea name="synopsis" id="synopsis" rows="10" placeholder="Le résumé du film" class="form-control"></textarea>
+            <textarea name="synopsis" id="synopsis" rows="10" placeholder="Le résumé du film"
+                class="form-control"></textarea>
             <label for="imageUrl">Image</label>
             <input type="url" name="imageUrl" id="imageUrl" placeholder="L'URL de l'image du film" class="form-control">
             <label for="releaseDate">Date de sortie</label>
