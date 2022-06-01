@@ -21,7 +21,38 @@
         "lastName" => "Chevalier",
         "age" => 29
     ];
-    echo ("Bonjour, je m'appelle {$myInformations['firstName']} ! :)");
+
+    function displayNames(array $names): string
+    {
+        $string = "Dans ma classe, il y a ";
+        $i = 0;
+        while ($i <= sizeof($names) - 1) {
+            if ($i === 2) {
+                $i++;
+                continue;
+            }
+            $string .= $names[$i];
+            $i !== 0 && $string .= ", ";
+            $i++;
+        }
+        return $string . "<br/>";
+    }
+
+    $firstNames2 = array("Lionel", "Philippe", "Laurent", "Melissa");
+
+    $result = displayNames($firstNames);
+    echo displayNames($firstNames2);
+
+    echo $result;
+
+    /* echo "J'ai un tableau de " . count($firstNames) . " éléments";
+    for ($i = count($firstNames) - 1; $i >= 0; $i--) {
+        echo "Je m'appelle $firstNames[$i] ! :)";
+    }
+    foreach ($myInformations as $key => $information) {
+        echo "$information ! :)<br/>";
+    } */
+
     ?>
     <header>
         <nav class="navbar navbar-expand-lg bg-light">
