@@ -14,7 +14,7 @@
 
 <body>
     <?php
-    $firstName = "Michael";
+    /* $firstName = "Michael";
     $firstNames = array("Christelle", "Christophe", $firstName, "Aline");
     $myInformations = [
         "firstName" => "Chris",
@@ -45,14 +45,13 @@
 
     echo $result;
 
-    /* echo "J'ai un tableau de " . count($firstNames) . " éléments";
+    echo "J'ai un tableau de " . count($firstNames) . " éléments";
     for ($i = count($firstNames) - 1; $i >= 0; $i--) {
         echo "Je m'appelle $firstNames[$i] ! :)";
     }
     foreach ($myInformations as $key => $information) {
         echo "$information ! :)<br/>";
     } */
-
     ?>
     <header>
         <nav class="navbar navbar-expand-lg bg-light">
@@ -79,6 +78,12 @@
         <h1>My Movies</h1>
         <h3>Découvrez et partagez des films !</h3>
         <img class="logo" src="./images/logo.png" alt="Logo My Movies">
+
+        <?php
+            /* foreach ($movies as $movie) {
+                # code...
+            } */
+        ?>
 
         <section class="container d-flex justify-content-center">
             <div class="card mx-3" style="width: 18rem;">
