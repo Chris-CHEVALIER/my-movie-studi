@@ -14,7 +14,19 @@
 
 <body>
     <?php
-    /* $firstName = "Michael";
+
+    require_once "./entities/Movie.php";
+    $movie = new Movie([
+        "id" => 1,
+        "title" => "Avatar",
+        "description" => "Un film avec des gens bleus... :)",
+        "image_url" => "https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTA4nJB9z9llRSjgDa4SrU-Jwtb-3dwzkt90rF7KkCka1H90HDt",
+        "release_date" => "2009-12-16",
+        "director" => "James Cameron",
+        "category_id" => 3
+    ]);
+    /* var_dump($movie); 
+    $firstName = "Michael";
     $firstNames = array("Christelle", "Christophe", $firstName, "Aline");
     $myInformations = [
         "firstName" => "Chris",
@@ -80,7 +92,7 @@
         <img class="logo" src="./images/logo.png" alt="Logo My Movies">
 
         <?php
-            /* foreach ($movies as $movie) {
+        /* foreach ($movies as $movie) {
                 # code...
             } */
         ?>
@@ -89,9 +101,9 @@
             <div class="card mx-3" style="width: 18rem;">
                 <img src="https://fr.web.img6.acsta.net/medias/nmedia/18/78/95/70/19485155.jpg" class="card-img-top" alt="Avatar">
                 <div class="card-body">
-                    <h5 class="card-title">Avatar</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Aventure</h6>
-                    <p class="card-text">Un film avec des gens bleus.</p>
+                    <h5 class="card-title"><?= $movie->getTitle() ?></h5>
+                    <h6 class="card-subtitle mb-2 text-muted"><?= $movie->getRelease_date() ?></h6>
+                    <p class="card-text"><?= $movie->getDescription() ?></p>
                     <a href="#" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier"><i class="fa-solid fa-pen-to-square"></i></a>
                     <a href="#" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer"><i class="fa-solid fa-trash-can"></i></a>
                 </div>
