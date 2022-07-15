@@ -1,6 +1,6 @@
 <?php
 
-require_once "./config/DotEnv.php";
+//require_once "../config/DotEnv.php";
 
 class CategoryController
 {
@@ -46,7 +46,10 @@ class CategoryController
 
     public function create(Category $newCategory): void
     {
-        # code...
+        $req = $this->pdo->prepare("INSERT INTO `category` (name, color) VALUES (:name, :color)");
+        $req->bindParam(":name", $newCategory->getName(), PDO::PARAM_STR);
+        $req->bindParam(":color", $newCategory->getColor(), PDO::PARAM_STR);
+        $req->execute();
     }
 
     public function update(Category $category): void

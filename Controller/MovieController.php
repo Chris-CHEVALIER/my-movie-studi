@@ -39,7 +39,14 @@ class MovieController
 
     public function create(Movie $newMovie): void
     {
-        # code...
+        $req = $this->pdo->prepare("INSERT INTO `movie` (title, description, image_url, release_date, director, category_id) VALUES (:title, :description, :image_url, :release_date, :director, :category_id)");
+        $req->bindValue(":title", $newMovie->getTitle(), PDO::PARAM_STR);
+        $req->bindValue(":description", $newMovie->getDescription(), PDO::PARAM_STR);
+        $req->bindValue(":image_url", $newMovie->getImage_url(), PDO::PARAM_STR);
+        $req->bindValue(":release_date", $newMovie->getRelease_date(), PDO::PARAM_STR);
+        $req->bindValue(":director", $newMovie->getDirector(), PDO::PARAM_STR);
+        $req->bindValue(":category_id", $newMovie->getCategory_id(), PDO::PARAM_INT);
+        $req->execute();
     }
 
     public function update(Movie $movie): void
