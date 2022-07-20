@@ -18,19 +18,32 @@
     function loadClass(string $class)
     {
         if ($class === "DotEnv") {
-            require_once "./config/$class.php";
+            require_once "../config/$class.php";
         } else if (str_contains($class, "Controller")) {
-            require_once "./Controller/$class.php";
+            require_once "../Controller/$class.php";
         } else {
-            require_once "./Entity/$class.php";
+            require_once "../Entity/$class.php";
         }
     }
 
     spl_autoload_register("loadClass");
 
-    $movieController = new MovieController();
-    $movies = $movieController->getAll();
-    $categoryController = new CategoryController();
+    $userController = new UserController();
+
+    if ($_POST) {
+        if ($_POST["password"] === $_POST["confirmPassword"]) {
+            unset($_POST["confirmPassword"]);
+            $_POST["password"] = password_hash($_POST["password"], PASSWORD_DEFAULT);
+            //echo $_POST["password"];
+            $newUser = new User($_POST);
+            $userController->create($newUser);
+            $_SESSION["username"] = $_POST["username"];
+            $_SESSION["email"] = $_POST["email"];
+            echo "<script>window.location='../index.php'</script>";
+        } else {
+            echo "<p>Le mot passe ne correspond pas.</p>";
+        }
+    }
 
     /* $movie = new Movie([
         "id" => 1,
@@ -84,70 +97,56 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
-                <a class="navbar-brand" href="#"><i class="bi bi-film"></i>My Movies</a>
+                <a class="navbar-brand" href="../index.php"><i class="bi bi-film"></i>My Movies</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Accueil</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="./views/create.php">Publier un film</a>
-                        </li>
+                        <div class="d-flex">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="#">Accueil</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./views/create.php">Publier un film</a>
+                            </li>
+                        </div>
+                        <div class="d-flex">
+                            <li class="nav-item">
+                                <a class="nav-link" href="./views/register.php">S'inscrire</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="./views/login.php">Se connecter</a>
+                            </li>
+                        </div>
                     </ul>
-                    <ul class="navbar-nav ms-auto">
-                        <?= $_SESSION && $_SESSION["username"] ? "<span>Bienvenue {$_SESSION["username"]} !</span>" : "" ?>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="./views/register.php">S'inscrire</a>
-                        </li>
-                        <li class="nav-item">
-                            <?=
-                            $_SESSION ? '<a class="nav-link" href="./views/disconnect.php">Se déconnecter</a>' :
-                                '<a class="nav-link" href="./views/login.php">Se connecter</a>'
-                            ?>
-
-                        </li>
-                    </ul>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main>
+    <main class="container d-flex flex-column justify-content-center text-center">
         <h1>My Movies</h1>
         <h3>Découvrez et partagez des films !</h3>
-        <img class="logo" src="./images/logo.png" alt="Logo My Movies">
+        <img class="logo mx-auto" src="../images/logo.png" width="250px" alt="Logo My Movies">
 
+        <h4>Créer un compte utilisateur</h4>
         <section class="container d-flex justify-content-center">
-            <?php
-            foreach ($movies as $movie) :
-                $category = $categoryController->get($movie->getCategory_id());
-                $releaseDate = new DateTime($movie->getRelease_date());
-            ?>
-                <div class="card mx-3" style="width: 18rem;">
-                    <img src="<?= $movie->getImage_url() ?>" class="card-img-top" alt="<?= $movie->getTitle() ?>">
-                    <div class="card-body">
-                        <h5 class="card-title"><?= $movie->getTitle() ?></h5>
-                        <h6 class="card-subtitle mb-2 text-muted"><?= $releaseDate->format('d/m/Y') ?> - <?= $movie->getDirector() ?></h6>
-                        <p class="card-text"><?= $movie->getDescription() ?></p>
-                        <footer class="blockquote-footer" style="color: <?= $category->getColor() ?>"><?= $category->getName() ?></footer>
-                        <a href="./views/update.php?id=<?= $movie->getId() ?>" class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="top" title="Modifier"><i class="fa-solid fa-pen-to-square"></i></a>
-                        <a href="./views/delete.php?id=<?= $movie->getId() ?>" class="btn btn-danger" data-bs-toggle="tooltip" data-bs-placement="top" title="Supprimer"><i class="fa-solid fa-trash-can"></i></a>
-                    </div>
-                </div>
+            <form method="post">
+                <label for="username">Nom d'utilisateur</label>
+                <input type="text" class="form-control" name="username" id="username" placeholder="Nom d'utilisateur" required>
+                <label for="email">E-mail</label>
+                <input type="email" class="form-control" name="email" id="email" placeholder="Votre adresse e-mail" required>
+                <label for="password">Mot de passe</label>
+                <input type="password" class="form-control" name="password" id="password" placeholder="Votre mot de passe" required>
+                <label for="confirmPassword">Confirmer le mot de passe</label>
+                <input type="password" class="form-control" name="confirmPassword" id="confirmPassword" placeholder="Confirmez votre mot de passe" required>
 
-            <?php endforeach ?>
+                <input type="submit" class="btn btn-primary my-3" value="Créer un compte">
+            </form>
         </section>
     </main>
-
-    <footer>
-
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script>
-    <script src="./scripts/script.js"></script>
 </body>
 
 </html>
